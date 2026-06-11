@@ -1,0 +1,31 @@
+[workspace]
+authors = ["Leonard Schulz <leonard.schulz@tuhh.de>"]
+channels = ["conda-forge"]
+name = "raycachetools"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+format-check = { cmd = "ruff format --check src/raycachetools tests docs", description = "Check code formatting." }
+lint = { cmd = "ruff check src/raycachetools tests docs", description = "Run Ruff linting." }
+test = { cmd = "pytest", env = { PYTHONPATH = "src" }, description = "Run the pytest suite." }
+docs = { cmd = "sphinx-build -b html docs docs/_build/html", env = { PYTHONPATH = "src" }, description = "Build the HTML documentation." }
+docs-clean = { cmd = "rm -rf docs/_build/html", description = "Remove generated HTML documentation." }
+docs-fresh = { cmd = "sphinx-build -E -b html docs docs/_build/html", env = { PYTHONPATH = "src" }, description = "Rebuild the HTML documentation from scratch." }
+build = { cmd = "python -m build --no-isolation", description = "Build source and wheel distributions." }
+dist-check = { cmd = "twine check dist/*", depends-on = ["build"], description = "Build and check distributions." }
+check = { depends-on = ["format-check", "lint", "test", "dist-check", "docs"], description = "Run the full local release check suite." }
+
+[dependencies]
+python = ">=3.12,<3.13"
+ray-default = ">=2.30,<3"
+cachetools = ">=7,<8"
+pytest = ">=8,<10"
+pytest-cov = ">=6,<8"
+ruff = ">=0.12,<1"
+python-build = ">=1,<2"
+setuptools = ">=61,<81"
+wheel = ">=0.43,<1"
+twine = ">=5,<7"
+sphinx = ">=8,<10"
+sphinx-rtd-theme = ">=3,<4"

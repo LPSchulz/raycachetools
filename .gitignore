@@ -1,0 +1,13 @@
+*.egg-info
+*.pyc
+*.swp
+.cache/
+.coverage
+.pytest_cache/
+.tox/
+.vscode/
+MANIFEST
+build/
+dist/
+docs/_build/
+
